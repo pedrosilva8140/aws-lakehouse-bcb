@@ -43,3 +43,13 @@ def test_reprova_dolar_fora_da_faixa(spark):
     df = bronze_para_silver(bronze(spark, [("03/11/2025", "510", "dolar", AGORA)]))
     with pytest.raises(ValueError, match="faixa"):
         verificar_qualidade(df)
+
+def test_aceita_ipca_negativo_deflacao(spark):
+    df = bronze_para_silver(bronze(spark, [("01/08/2025", "-0.11", "ipca", AGORA)]))
+    verificar_qualidade(df)  # deflação é válida: não deve lançar erro
+
+
+def test_reprova_selic_negativa(spark):
+    df = bronze_para_silver(bronze(spark, [("03/11/2025", "-0.05", "selic", AGORA)]))
+    with pytest.raises(ValueError, match="negativo"):
+        verificar_qualidade(df)      
