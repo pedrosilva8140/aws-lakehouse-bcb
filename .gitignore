@@ -1,0 +1,14 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+infra/build/
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Segredos
+.env
