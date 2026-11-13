@@ -1,0 +1,5 @@
+pyspark==3.5.*
+pytest
+ruff
+boto3
+moto[s3]

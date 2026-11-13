@@ -2,7 +2,7 @@ import json
 import os
 import urllib.error
 import urllib.request
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 
 import boto3
 
@@ -41,7 +41,7 @@ def handler(event, context):
     # Sem datas no evento: busca o dia de ontem
     fim = date.fromisoformat(event["data_fim"]) if "data_fim" in event else date.today() - timedelta(days=1)
     ini = date.fromisoformat(event["data_inicio"]) if "data_inicio" in event else fim
-    agora = datetime.now(timezone.utc).isoformat()
+    agora = datetime.now(UTC).isoformat()
 
     total = 0
     for serie, cod in SERIES.items():
