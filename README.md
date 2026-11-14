@@ -79,7 +79,7 @@ só para dólar e Selic, e dois testes foram adicionados para cobrir o caso.
 ## Resultados
 
 - **524 registros** de nov/2025 a nov/2026 (dólar e Selic diários, IPCA mensal)
-- **Carga incremental:** a 2ª execução sem dados novos levou **45 s** (contra 101 s) e não gravou nenhum arquivo
+- **Carga incremental:** a carga completa levou **101 s**; as reexecuções sem dados novos levaram **74 s e 45 s** e não gravaram nenhum arquivo
 - **Partition pruning no Athena:**
 
 | Consulta | Linhas | Dados lidos |
@@ -100,7 +100,8 @@ As consultas estão em [`sql/consultas.sql`](sql/consultas.sql).
 | Dólar — últimos 12 meses | ![Consulta 1](docs/05-athena-dolar.png) |
 | Dólar × Selic anualizada | ![Consulta 2](docs/06-athena-dolar-selic.png) |
 | Meses com deflação | ![Consulta 3](docs/07-athena-deflacao.png) |
-| Partition pruning | ![Consulta 4](docs/08-athena-pruning.png) |
+| Sem filtro de partição | ![Consulta 4a](docs/08a-athena-sem-filtro.png) |
+| Com filtro de partição | ![Consulta 4b](docs/08b-athena-com-filtro.png) |
 
 ## Custo
 
