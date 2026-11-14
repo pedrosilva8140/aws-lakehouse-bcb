@@ -1,0 +1,38 @@
+name: ci
+
+# Roda a cada push e a cada pull request
+on: [push, pull_request]
+
+jobs:
+  python:
+    name: Lint e testes (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # O PySpark precisa de Java
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: pytest -v
+
+  terraform:
+    name: Validação (Terraform)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - run: terraform validate
